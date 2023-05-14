@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int	ft_check_flag(const char *str, int i, va_list args, int count);
+int	ft_check_flag(const char *str, int i, va_list args);
 
 int	ft_printf(char const *str, ...)
 {
@@ -32,64 +32,10 @@ int	ft_printf(char const *str, ...)
 			i++;
 			if (str[i] == '\0')
 				break ;
-			if (str[i] == 'c')
-			{
-				re = ft_putchar(va_arg(args, int));
-				if (re == -1)
-					return (-1);
-				count += re;
-			}
-			else if (str[i] == 's')
-			{
-				re = ft_putstr_printf(va_arg(args, char *));
-				if (re == -1)
-					return (-1);
-				count += re;
-			}
-			else if (str[i] == 'p')
-			{
-				re = ft_putptr_printf(va_arg(args, void *));
-				if (re == -1)
-					return (-1);
-				count += re;
-			}
-			else if (str[i] == 'd' || str[i] == 'i')
-			{
-				re = ft_putnbr_printf(va_arg(args, int));
-				if (re == -1)
-					return (-1);
-				count += re;
-			}
-			else if (str[i] == 'u')
-			{
-				re = ft_putunsig_printf(va_arg(args, unsigned int));
-				if (re == -1)
-					return (-1);
-				count += re;
-			}
-			else if (str[i] == 'x')
-			{
-				re = ft_putnbr_base_printf(va_arg(args, unsigned int), "0123456789abcdef");
-				if (re == -1)
-					return (-1);
-				count += re;
-			}
-			else if (str[i] == 'X')
-			{
-				re = ft_putnbr_base_printf(va_arg(args, unsigned int), "0123456789ABCDEF");
-				if (re == -1)
-					return (-1);
-				count += re;
-			}
-			else if (str[i] == '%')
-			{
-				re = ft_putchar('%');
-				if (re == -1)
-					return (-1);
-				count += re;
-			}
-			else
+			re = ft_check_flag(str, i, args);
+			if (re == -1)
 				return (-1);
+			count += re;
 			i++;
 		}
 		if (str[i] == '\0')
@@ -107,6 +53,28 @@ int	ft_printf(char const *str, ...)
 	return (count);
 }
 
-// int	ft_check_flag(const char *str, int i, va_list args, int count)
-// {
-// }
+int	ft_check_flag(const char *str, int i, va_list args)
+{
+	int		re;
+
+	re = 0;
+	if (str[i] == 'c')
+		re = ft_putchar(va_arg(args, int));
+	else if (str[i] == 's')
+		re = ft_putstr_printf(va_arg(args, char *));
+	else if (str[i] == 'p')
+		re = ft_putptr_printf(va_arg(args, void *));
+	else if (str[i] == 'd' || str[i] == 'i')
+		re = ft_putnbr_printf(va_arg(args, int));
+	else if (str[i] == 'u')
+		re = ft_putunsig_printf(va_arg(args, unsigned int));
+	else if (str[i] == 'x')
+		re = ft_putnbr_base_printf(va_arg(args, unsigned int), "0123456789abcdef");
+	else if (str[i] == 'X')
+		re = ft_putnbr_base_printf(va_arg(args, unsigned int), "0123456789ABCDEF");
+	else if (str[i] == '%')
+		re = ft_putchar('%');
+	if (re == -1)
+		return (-1);
+	return (re);
+}
