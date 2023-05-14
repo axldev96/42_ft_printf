@@ -13,42 +13,18 @@
 #include "ft_printf.h"
 
 int	ft_check_flag(const char *str, int i, va_list args);
+int	ft_iterate(const char *str, int re, int count, va_list args);
 
 int	ft_printf(char const *str, ...)
 {
 	va_list	args;
-	int		i;
 	int		count;
 	int		re;
 
 	count = 0;
-	i = 0;
 	re = 0;
 	va_start(args, str);
-	while (str[i])
-	{
-		if (str[i] == '%')
-		{
-			i++;
-			if (str[i] == '\0')
-				break ;
-			re = ft_check_flag(str, i, args);
-			if (re == -1)
-				return (-1);
-			count += re;
-			i++;
-		}
-		if (str[i] == '\0')
-			break ;
-		if (str[i] != '%')
-		{
-			re = ft_putchar(str[i]);
-			if (re == -1)
-				return (-1);
-			count += re;
-			i++;
-		}
-	}
+	count = ft_iterate(str, re, count, args);
 	va_end(args);
 	return (count);
 }
@@ -77,4 +53,33 @@ int	ft_check_flag(const char *str, int i, va_list args)
 	if (re == -1)
 		return (-1);
 	return (re);
+}
+
+int	ft_iterate(const char *str, int re, int count, va_list args)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '%')
+		{
+			re = ft_check_flag(str, ++i, args);
+			if (re == -1)
+				return (-1);
+			count += re;
+			i++;
+		}
+		if (str[i] == '\0')
+			break ;
+		if (str[i] != '%')
+		{
+			re = ft_putchar(str[i]);
+			if (re == -1)
+				return (-1);
+			count += re;
+			i++;
+		}
+	}
+	return (count);
 }
