@@ -45,9 +45,9 @@ int	ft_check_flag(const char *str, int i, va_list args)
 	else if (str[i] == 'u')
 		re = ft_putunsig_printf(va_arg(args, unsigned int));
 	else if (str[i] == 'x')
-		re = ft_putnbr_base_printf(va_arg(args, unsigned int), "0123456789abcdef");
+		re = ft_putnbr_base(va_arg(args, unsigned int), "0123456789abcdef");
 	else if (str[i] == 'X')
-		re = ft_putnbr_base_printf(va_arg(args, unsigned int), "0123456789ABCDEF");
+		re = ft_putnbr_base(va_arg(args, unsigned int), "0123456789ABCDEF");
 	else if (str[i] == '%')
 		re = ft_putchar('%');
 	if (re == -1)

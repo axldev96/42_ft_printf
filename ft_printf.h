@@ -17,12 +17,11 @@
 # include <stdlib.h>
 # include <limits.h>
 
-int	ft_printf(char const *, ...);
-
+int	ft_printf(char const *str, ...);
 int	ft_putchar(char c);
 int	ft_putstr_printf(char *s);
 int	ft_putnbr_printf(int n);
-int	ft_putnbr_base_printf(unsigned long n, char *base);
+int	ft_putnbr_base(unsigned long n, char *base);
 int	ft_putptr_printf(void *ptr);
 int	ft_putunsig_printf(unsigned int n);
 
