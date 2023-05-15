@@ -6,7 +6,7 @@
 /*   By: acaceres <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 00:07:58 by acaceres          #+#    #+#             */
-/*   Updated: 2023/05/15 00:39:16 by acaceres         ###   ########.fr       */
+/*   Updated: 2023/05/15 02:11:46 by acaceres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,47 +22,8 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-int	ft_putchar(char c)
+int	ft_putnbr_printf(int n, int count, int re)
 {
-	int	result;
-
-	result = write(1, &c, 1);
-	if (result == -1)
-		return (-1);
-	return (result);
-}
-
-int	ft_putstr_printf(char *s)
-{
-	int	count;
-	int	re;
-
-	count = 0;
-	re = 0;
-	if (!s)
-	{
-		re = write(1, "(null)", 6);
-		if (re == -1)
-			return (-1);
-		return (re);
-	}
-	while (*s)
-	{
-		re = ft_putchar(*s++);
-		if (re == -1)
-			return (-1);
-		count += re;
-	}
-	return (count);
-}
-
-int	ft_putnbr_printf(int n)
-{
-	int	count;
-	int	re;
-
-	count = 0;
-	re = 0;
 	if (n == -2147483648)
 		return (write(1, "-2147483648", 11));
 	if (n < 0)
@@ -70,15 +31,12 @@ int	ft_putnbr_printf(int n)
 		if (ft_putchar('-') == -1)
 			return (-1);
 		count++;
-		n = n * -1;
+		n *= -1;
 	}
 	if (n >= 10)
 	{
-		re = ft_putnbr_printf(n / 10);
-		count += re;
-		if (re == -1)
-			return (-1);
-		if (ft_putchar(n % 10 + '0') == -1)
+		count += ft_putnbr_printf(n / 10, 0, re);
+		if (count == -1 || ft_putchar(n % 10 + '0') == -1)
 			return (-1);
 		count++;
 	}

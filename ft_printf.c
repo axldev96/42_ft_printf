@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libftprintf.c                                      :+:      :+:    :+:   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acaceres <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 12:08:56 by acaceres          #+#    #+#             */
-/*   Updated: 2023/05/12 12:08:59 by acaceres         ###   ########.fr       */
+/*   Updated: 2023/05/15 02:11:26 by acaceres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_check_flag(const char *str, int i, va_list args)
 	else if (str[i] == 'p')
 		re = ft_putptr_printf(va_arg(args, void *));
 	else if (str[i] == 'd' || str[i] == 'i')
-		re = ft_putnbr_printf(va_arg(args, int));
+		re = ft_putnbr_printf(va_arg(args, int), 0, re);
 	else if (str[i] == 'u')
 		re = ft_putunsig_printf(va_arg(args, unsigned int));
 	else if (str[i] == 'x')
@@ -80,6 +80,35 @@ int	ft_iterate(const char *str, int re, int count, va_list args)
 			count += re;
 			i++;
 		}
+	}
+	return (count);
+}
+
+int	ft_putchar(char c)
+{
+	return (write(1, &c, 1));
+}
+
+int	ft_putstr_printf(char *s)
+{
+	int	count;
+	int	re;
+
+	count = 0;
+	re = 0;
+	if (!s)
+	{
+		re = write(1, "(null)", 6);
+		if (re == -1)
+			return (-1);
+		return (re);
+	}
+	while (*s)
+	{
+		re = ft_putchar(*s++);
+		if (re == -1)
+			return (-1);
+		count += re;
 	}
 	return (count);
 }

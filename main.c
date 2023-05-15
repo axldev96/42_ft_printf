@@ -6,7 +6,7 @@
 /*   By: acaceres <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:29:51 by acaceres          #+#    #+#             */
-/*   Updated: 2023/05/12 13:32:20 by acaceres         ###   ########.fr       */
+/*   Updated: 2023/05/15 02:02:08 by acaceres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 #include "ft_printf.h"
 #include <string.h>
 
-int main()
+int	main(void)
 {
-	ft_printf("Hello %s\n", "World");
-	return 0;
+	int	a = 10;
+	void	*b = &a;
+
+	ft_printf("\n%p", &b);
+	return (0);
 }
