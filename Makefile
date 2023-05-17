@@ -6,7 +6,7 @@
 #    By: acaceres <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/12 12:43:34 by acaceres          #+#    #+#              #
-#    Updated: 2023/05/12 12:43:35 by acaceres         ###   ########.fr        #
+#    Updated: 2023/05/15 13:34:16 by acaceres         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,8 +51,6 @@ $(NAME): $(OBJS_TO_FOLDER)
 ### DEFINE MAKE ALL ###
 all: $(NAME)
 	
-LIB = ar -rcs
-
 ### MAKE CLEAN ###
 clean:
 	@$(RM) $(OBJS_DIR)

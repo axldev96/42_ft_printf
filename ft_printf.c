@@ -6,14 +6,14 @@
 /*   By: acaceres <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 12:08:56 by acaceres          #+#    #+#             */
-/*   Updated: 2023/05/15 02:11:26 by acaceres         ###   ########.fr       */
+/*   Updated: 2023/05/17 17:15:16 by acaceres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_check_flag(const char *str, int i, va_list args);
-int	ft_iterate(const char *str, int re, int count, va_list args);
+static int	ft_check_flag(const char *str, int i, va_list args);
+static int	ft_iterate(const char *str, int re, int count, va_list args);
 
 int	ft_printf(char const *str, ...)
 {
@@ -29,33 +29,7 @@ int	ft_printf(char const *str, ...)
 	return (count);
 }
 
-int	ft_check_flag(const char *str, int i, va_list args)
-{
-	int		re;
-
-	re = 0;
-	if (str[i] == 'c')
-		re = ft_putchar(va_arg(args, int));
-	else if (str[i] == 's')
-		re = ft_putstr_printf(va_arg(args, char *));
-	else if (str[i] == 'p')
-		re = ft_putptr_printf(va_arg(args, void *));
-	else if (str[i] == 'd' || str[i] == 'i')
-		re = ft_putnbr_printf(va_arg(args, int), 0, re);
-	else if (str[i] == 'u')
-		re = ft_putunsig_printf(va_arg(args, unsigned int));
-	else if (str[i] == 'x')
-		re = ft_putnbr_base(va_arg(args, unsigned int), "0123456789abcdef");
-	else if (str[i] == 'X')
-		re = ft_putnbr_base(va_arg(args, unsigned int), "0123456789ABCDEF");
-	else if (str[i] == '%')
-		re = ft_putchar('%');
-	if (re == -1)
-		return (-1);
-	return (re);
-}
-
-int	ft_iterate(const char *str, int re, int count, va_list args)
+static int	ft_iterate(const char *str, int re, int count, va_list args)
 {
 	int	i;
 
@@ -82,6 +56,32 @@ int	ft_iterate(const char *str, int re, int count, va_list args)
 		}
 	}
 	return (count);
+}
+
+static int	ft_check_flag(const char *str, int i, va_list args)
+{
+	int		re;
+
+	re = 0;
+	if (str[i] == 'c')
+		re = ft_putchar(va_arg(args, int));
+	else if (str[i] == 's')
+		re = ft_putstr_printf(va_arg(args, char *));
+	else if (str[i] == 'p')
+		re = ft_putptr_printf(va_arg(args, void *));
+	else if (str[i] == 'd' || str[i] == 'i')
+		re = ft_putnbr_printf(va_arg(args, int), 0, re);
+	else if (str[i] == 'u')
+		re = ft_putunsig_printf(va_arg(args, unsigned int));
+	else if (str[i] == 'x')
+		re = ft_putnbr_base(va_arg(args, unsigned int), "0123456789abcdef");
+	else if (str[i] == 'X')
+		re = ft_putnbr_base(va_arg(args, unsigned int), "0123456789ABCDEF");
+	else if (str[i] == '%')
+		re = ft_putchar('%');
+	if (re == -1)
+		return (-1);
+	return (re);
 }
 
 int	ft_putchar(char c)
