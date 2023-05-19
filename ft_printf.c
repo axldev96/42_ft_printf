@@ -6,7 +6,7 @@
 /*   By: acaceres <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 12:08:56 by acaceres          #+#    #+#             */
-/*   Updated: 2023/05/17 17:15:16 by acaceres         ###   ########.fr       */
+/*   Updated: 2023/05/18 00:09:50 by acaceres         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	ft_printf(char const *str, ...)
 	int		count;
 	int		re;
 
+	if (!str)
+		return (-1);
 	count = 0;
 	re = 0;
 	va_start(args, str);
@@ -38,20 +40,19 @@ static int	ft_iterate(const char *str, int re, int count, va_list args)
 	{
 		if (str[i] == '%')
 		{
+			if (str[i + 1] == '\0')
+				break ;
 			re = ft_check_flag(str, ++i, args);
 			if (re == -1)
 				return (-1);
 			count += re;
 			i++;
 		}
-		if (str[i] == '\0')
-			break ;
-		if (str[i] != '%')
+		if (str[i] != '%' && str[i] != '\0')
 		{
-			re = ft_putchar(str[i]);
-			if (re == -1)
+			if (ft_putchar(str[i]) == -1)
 				return (-1);
-			count += re;
+			count++;
 			i++;
 		}
 	}
