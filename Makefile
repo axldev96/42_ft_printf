@@ -6,7 +6,7 @@
 #    By: acaceres <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/12 12:43:34 by acaceres          #+#    #+#              #
-#    Updated: 2023/05/15 13:34:16 by acaceres         ###   ########.fr        #
+#    Updated: 2023/09/12 08:53:29 by acaceres         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,9 @@ OBJS_TO_FOLDER	= 	$(addprefix $(OBJS_DIR), $(OBJS))
 
 ### COMPILED OUTPUT ###
 NAME = libftprintf.a
+
+### MAIN TARGET ###
+MAIN_TARGET = all
 
 ### COMPILE COMMANDS AND FLAGS ###
 CC		=	cc
@@ -61,7 +64,8 @@ fclean:	clean
 	@$(RM) $(NAME)
 
 ### RELINK ###
-re: fclean all
+re: fclean
+	$(MAKE) $(MAIN_TARGET)
 
 ### PHONY'S ###
 .PHONY: all clean fclean re
