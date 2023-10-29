@@ -6,66 +6,41 @@
 #    By: acaceres <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/12 12:43:34 by acaceres          #+#    #+#              #
-#    Updated: 2023/09/12 08:53:29 by acaceres         ###   ########.fr        #
+#    Updated: 2023/10/29 07:33:26 by acaceres         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = ft_printf.c			\
-	   ft_printf_utils.c
+SRCS = srcs/ft_printf.c			\
+	   srcs/ft_printf_utils.c
 
-### COLORS ###
-COLOUR_GREEN=\033[0;32m
-COLOUR_RED=\033[0;31m
-COLOUR_BLUE=\033[0;34m
-COLOUR_END=\033[0m
-
-
-### OBJS FOLDER ###
-OBJS_DIR = objs/
-
-## MAIN ###
-OBJS			=	$(SRCS:.c=.o)
-OBJS_TO_FOLDER	= 	$(addprefix $(OBJS_DIR), $(OBJS))
-
-### COMPILED OUTPUT ###
 NAME = libftprintf.a
 
-### MAIN TARGET ###
+OBJS =	$(SRCS:.c=.o)
+
 MAIN_TARGET = all
 
-### COMPILE COMMANDS AND FLAGS ###
-CC		=	cc
-FLAGS	=	-Wall -Wextra -Werror
+CC = cc
+C_FLAGS =	-Wall -Wextra -Werror
+INC = -I includes
+AR = ar
+AR_FLAGS = -rcs
+RM = rm -rf
 
-### REMOVE COMMAND
-RM		=	rm -rf
+%.o: %.c
+	$(CC) $(C_FLAGS) $(INC) -c $< -o $@
 
-### CREATE FOLDER & COMPILE .o ###
-$(OBJS_DIR)%.o: %.c	ft_printf.h
-	@mkdir -p $(OBJS_DIR)
-	@$(CC) $(FLAGS) -c $< -o $@
-	@echo "$(COLOUR_BLUE)Compiling: $(COLOUR_END)$(COLOUR_GREEN)$<$(COLOUR_END)"
+$(NAME): $(OBJS)
+	$(AR) $(AR_FLAGS) $(NAME) $(OBJS)
 
-### COMPILE LIBRARY ###
-$(NAME): $(OBJS_TO_FOLDER)
-	@ar rcs $(NAME) $(OBJS_TO_FOLDER)
-	@echo "$(COLOUR_GREEN)ft_printf done!$(COLOUR_END)"
-
-### DEFINE MAKE ALL ###
-all: $(NAME)
+all: $(OBJS) $(NAME)
 	
-### MAKE CLEAN ###
 clean:
-	@$(RM) $(OBJS_DIR)
-	@echo "$(COLOUR_BLUE)$(OBJS_DIR)$(COLOUR_END) $(COLOUR_GREEN)cleaned!$(COLOUR_END)"
+	$(RM) $(OBJS)
 
-### MAKE FCLEAN ###
 fclean:	clean
-	@$(RM) $(NAME)
+	$(RM) $(NAME)
 
-### RELINK ###
 re: fclean
 	$(MAKE) $(MAIN_TARGET)
 
-### PHONY'S ###
 .PHONY: all clean fclean re
